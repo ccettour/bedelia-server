@@ -1,6 +1,15 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+
+//para gestionar cors
 const cors = require("cors");
+
+//para loguear las peticiones que recibe el servidor
+var morgan = require('morgan');
+
+var fs = require('fs');
+
+var path = require('path');
 
 require('dotenv').config(); //para leer las variables de entorno que están en .env
 
@@ -9,6 +18,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+//Crea un archivo de acceso:
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'});
+app.use(morgan('combined', { stream: accessLogStream }));
 app.use(cors());
 
 app.get('/', (req,res)=>{
