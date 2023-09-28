@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Consulta por app React</title>
+  <style>
+    body {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', sans-serif;
+      background-color: rgb(48,48,48);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: rgb(48,48,48);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #58032d;
+    }
+    p {
+      color: rgb(232, 178, 209);
+    }    
+    li {
+      color: rgb(232, 178, 209);
+    } 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Nueva consulta</h1>
+    <p>Recibiste una nueva consulta desde la sección contactos de la página de Bedelía. Estos son los datos proporcionados por el remitente:</p>    
+    <ul>
+        <li>Nombre: {{nombre}}</li>
+        <li>Correo electrónico: {{email}}</li>
+        <li>Consulta: {{ mensaje }}</li>    
+    </ul>
+  </div>
+</body>
+</html>

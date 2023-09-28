@@ -28,6 +28,7 @@ app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use(cors());
 
+//Para testear la API
 app.get('/', (req,res)=>{
     const saludo = {estado:true, mensaje:'bienvenido!'}
     res.status(200).json(saludo);
@@ -97,5 +98,5 @@ app.get('/estudiantes', (req, res)=>{
 });
 
 app.listen(process.env.PUERTO, ()=>{
-    console.log('API prog3 iniciada ' + process.env.PUERTO);
+    console.log('API de Bedelía iniciada en el puerto ' + process.env.PUERTO);
 })
