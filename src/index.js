@@ -34,8 +34,16 @@ app.get('/', (req,res)=>{
     res.status(200).json(saludo);
 });
 
-app.post("/contacto",(req,res)=>{
-    const {nombre,email,mensaje} = req.body;
+//Definiciçon de las rutas del api
+const v1Publico = require('./v1/rutas/publico');
+const v1Estudiante = require('./v1/rutas/estudiante');
+
+//Middleware del api
+app.use('/api/v1/publico', v1Publico);
+app.use('/api/v1/estudiante', v1Estudiante);
+
+/*app.post("/contacto",(req,res)=>{
+     const {nombre,email,mensaje} = req.body;
 
     const plantillaHds2 = fs.readFileSync(path.join(__dirname, '/handlebars/plantilla.hbs'), 'utf8');
     
@@ -74,8 +82,8 @@ app.post("/contacto",(req,res)=>{
             const respuesta = 'correo enviado';
             res.json({respuesta});
         }
-    })
-});
+    }) 
+});*/
 
 // conexión a la base de datos
 const conexion = mysql.createConnection({
