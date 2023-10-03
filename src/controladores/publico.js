@@ -6,19 +6,19 @@ const handlebars = require('handlebars');
 exports.enviarCorreo = async (req,res) => {
     const {nombre,email,mensaje} = req.body;
 
-    const plantillaHds2 = fs.readFileSync(path.join(__dirname, '../utiles/handlebars/plantilla.hbs'), 'utf8');
+    const plantillaHbs = fs.readFileSync(path.join(__dirname, '../utiles/handlebars/plantilla.hbs'), 'utf8');
     
-    const correoTemplate = handlebars.compile(plantillaHds2);
+    const correoTemplate = handlebars.compile(plantillaHbs);
   
     // Datos de la plantilla
-    const datos = {
+    const data = {
       nombre: nombre,
       email: email,
       mensaje: mensaje
     };
   
     // Renderizo la plantilla con los datos
-    const correoHtml = correoTemplate(datos);
+    const correoHtml = correoTemplate(data);
 
     const transporter=nodemailer.createTransport({
         service:'gmail',
@@ -31,7 +31,7 @@ exports.enviarCorreo = async (req,res) => {
     const opciones = {
         from:'api prog3',
         to:'chriscettour@gmail.com',
-        subject:'TP prog3',
+        subject:'Nuevo correo desde app Bedelia',
         html:correoHtml
     }
 
