@@ -84,9 +84,32 @@ crear = async (req,res)=>{
 
 ////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
 actualizar = async (req,res)=>{
-    
+    const {idEstudiante} =req.params;
+    const nuevosDatos = req.body;
 
-}
+    if (!idEstudiante || Object.keys(nuevosDatos).legth ===0) {
+        res.status(404).json({estado:'FALLO', msj:'Falta seleccionar ID del estudiante que desea modificar'});
+    }else {
+        try{
+            const resultado = await estudianteBD.actualizar(idEstudiante , nuevosDatos);
+            if (resultado.affectedRows ===1){
+                res.status(200).json({ estado:'OK', msj:'Estudiante modificado'});
+
+            }else {
+                res.status(404).json({estado:'FALLO', msj:'El estudiante no existe'});
+
+            }
+
+        }catch (ex){
+            console.error(ex);
+            res.status(500).json({estado:'FALLO', msj:'Error en el sistema'});
+
+        }
+
+    }
+
+
+};
 
 
 module.exports = {

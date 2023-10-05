@@ -66,8 +66,11 @@ const crear = async (estudiante) =>{
 
 ////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
 const actualizar = async () =>{
-  
+  const consulta = 'UPDATE estudiante SET activo = ?, correoElectronico = ?, celular = ? WHERE = idEstudiante?';
 
+  const [estudiante] = await conexion.query(consulta,estudiante);
+
+  return estudiante;
   
 }
 
