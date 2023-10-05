@@ -1,5 +1,7 @@
 const conexion = require("./conexionBD");
 
+
+////////////////////////////BUSCAR POR ID////////////////////////////
 const buscarPorID = async (idEstudiante) => {
   const consulta =
     "SELECT dni, nombre, apellido, " +
@@ -21,15 +23,9 @@ const buscarPorID = async (idEstudiante) => {
 };
 
 
-
-
-///////////BUSCAR TODOS//////////////
-
-
+////////////////////////////BUSCAR TODOS////////////////////////////
 const buscarTodos = async ()=>{
-
-
-    const consulta = "SELECT dni, nombre, apellido, fechaNacimiento,correoElectronico,celular,foto " +
+    const consulta = "SELECT dni, nombre, apellido, fechaNacimiento,correoElectronico,celular,foto, " +
     "(CASE " +
     "  WHEN nacionalidad = 0 THEN 'argentino' " +
     "  WHEN nacionalidad = 1 THEN 'uruguayo' " +
@@ -46,15 +42,12 @@ const buscarTodos = async ()=>{
     const [estudiantes] = await conexion.query (consulta);
 
     return estudiantes;
-    
-
 };
 
 
 
 
-////////////ELIMINAR ESTUDIANTE//////////////
-
+////////////////////////////ELIMINAR ESTUDIANTE////////////////////////////
 const eliminar = async (idEstudiante)=>{
     const consulta = 'UPDATE estudiante SET activo = 0 WHERE idEstudiante = ?';
     await conexion.query(consulta, [idEstudiante]);
@@ -62,17 +55,21 @@ const eliminar = async (idEstudiante)=>{
 
 
 
+////////////////////////////CREAR ESTUDIANTE////////////////////////////
+const crear = async (estudiante) =>{
+  const consulta = 'INSERT INTO estudiante SET ?';
+  const [estudianteNuevo] = await conexion.query(consulta,estudiante);
+
+  return estudianteNuevo;
+}
 
 
-//////////////////CREAR ESTUDIANTE///////////////////////
+////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
+const actualizar = async () =>{
+  
 
-
-/*const crear = async (estudiante) =>{
-    const {dni,nombre,apellido,fechaNacimiento,correroElectronico,celular,foto} = estudiante;
-
-    const consutla = 'INSERT INTO estudiante()'
-}*/
-
+  
+}
 
 
 
@@ -81,6 +78,6 @@ module.exports = {
     buscarPorID,
     buscarTodos,
     eliminar,
-    crear
-
+    crear,
+    actualizar
 }

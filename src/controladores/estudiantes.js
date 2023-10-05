@@ -1,5 +1,6 @@
 const estudianteBD = require("../baseDeDatos/estudianteBD");
 
+////////////////////////////BUSCAR POR ID////////////////////////////
 buscarPorId = async(req, res) => {
     try{
         const idEstudiante = req.params.idEstudiante;
@@ -18,13 +19,10 @@ buscarPorId = async(req, res) => {
 }
 
 
-
-
-///////////BUSCAR TODOS //////////////////////
-
+////////////////////////////BUSCAR TODOS////////////////////////////
 buscarTodos = async (req,res) =>{
     try {
-        const estudiante = await estudianteBD. buscarTodos();
+        const estudiante = await estudianteBD.buscarTodos();
 
         res.json ({ estado: 'OK', dato: estudiante});
     }catch (exec){
@@ -35,9 +33,7 @@ buscarTodos = async (req,res) =>{
 }
 
 
-//////////ELIMINAR ESTUDIANTE/////////
-
-
+////////////////////////////ELIMINAR ESTUDIANTE////////////////////////////
 eliminar = async (req,res) =>{
     const idEstudiante = req.params.idEstudiante;
 
@@ -56,16 +52,12 @@ eliminar = async (req,res) =>{
 }
 
 
-///////////////////CREAR ESTUDIANTE////////////////////////////
-
-
-
-
+////////////////////////////CREAR ESTUDIANTE////////////////////////////
 crear = async (req,res)=>{
-    const {dni, nombre, apellido, fechaNacimiento, nacionalidad,correoElectronico,celular,foto} = req.body;
+    const {dni, nombre, apellido, fechaNacimiento, nacionalidad, correoElectronico, celular, foto} = req.body;
 
-    if (!din || !nombre || !apellido || !nacionalidad || !correoElectronico){
-        res.status(404).json({estado:'FALLO', msj:'Faltan datos obligatorios'});
+    if (!dni || !nombre || !apellido || !nacionalidad || !correoElectronico){
+        res.status(404).json({estado:"FALLO", msj:"Faltan datos obligatorios"});
 
     }else{
         const estudiante = {
@@ -77,15 +69,22 @@ crear = async (req,res)=>{
             correoElectronico:correoElectronico,
             celular:celular,
             foto:foto
-        }
+        };
 
         try{
-            const estudianteNuevo = await estudianteBD.nuevo(estudiante);
+            const estudianteNuevo = await estudianteBD.crear(estudiante);
             res.status(201).json({estado:'OK', msj:'Estudiante creado', dato:estudianteNuevo});
-        }catch (exec){
-            console.log(exec);
+        }catch (ex){
+            console.log(ex);
         }
     }
+
+}
+
+
+////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
+actualizar = async (req,res)=>{
+    
 
 }
 
@@ -93,5 +92,7 @@ crear = async (req,res)=>{
 module.exports = {
     buscarPorId,
     buscarTodos,
-    eliminar 
+    eliminar,
+    crear,
+    actualizar
 }
