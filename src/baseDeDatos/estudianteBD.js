@@ -65,16 +65,16 @@ const crear = async (estudiante) =>{
 
 
 ////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
-const actualizar = async () =>{
-  const consulta = 'UPDATE estudiante SET activo = ?, correoElectronico = ?, celular = ? WHERE = idEstudiante?';
+const actualizar = async (idEstudiante, nuevosDatos) =>{
+  const consulta = 'UPDATE estudiante SET dni=?,nombre=?,apellido=?,fechaNacimiento=?,nacionalidad=?,correoElectronico=?,celular=?,foto=? WHERE idEstudiante=?';
 
-  const [estudiante] = await conexion.query(consulta,estudiante);
-
-  return estudiante;
-  
-}
-
-
+  try {
+    const [resultado] = await conexion.query(consulta, [nuevosDatos.dni, nuevosDatos.nombre, nuevosDatos.apellido, nuevosDatos.fechaNacimiento, nuevosDatos.nacionalidad, nuevosDatos.correoElectronico, nuevosDatos.celular,  nuevosDatos.foto, idEstudiante]);
+    return resultado;
+  } catch (error) {
+    throw error;
+  }
+};
 
 
 module.exports = {
