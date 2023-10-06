@@ -4,21 +4,21 @@ const conexion = require("./conexionBD");
 ////////////////////////////BUSCAR POR ID////////////////////////////
 const buscarPorID = async (idEstudiante) => {
   const consulta =
-    "SELECT dni, nombre, apellido, " +
+    "SELECT dni, nombre, apellido, fechaNacimiento,correoElectronico,celular,foto, "  +
     "(CASE " +
-    "  WHEN nacionalidad = 0 THEN 'arg' " +
-    "  WHEN nacionalidad = 1 THEN 'uru' " +
-    "  WHEN nacionalidad = 2 THEN 'chi' " +
-    "  WHEN nacionalidad = 3 THEN 'par' " +
-    "  WHEN nacionalidad = 4 THEN 'bra' " +
-    "  WHEN nacionalidad = 5 THEN 'bol' " +
+    "  WHEN nacionalidad = 0 THEN 'argentino' " +
+    "  WHEN nacionalidad = 1 THEN 'uruguayo' " +
+    "  WHEN nacionalidad = 2 THEN 'chileno' " +
+    "  WHEN nacionalidad = 3 THEN 'paraguayo' " +
+    "  WHEN nacionalidad = 4 THEN 'brasilero' " +
+    "  WHEN nacionalidad = 5 THEN 'boliviano' " +
     "  ELSE '' " +
     "END) AS nacionalidad " +
     "FROM estudiante " +
     "WHERE activo = 1 AND idEstudiante = ?";
 
   const [estudiante] = await conexion.query(consulta, idEstudiante);
-
+  console.log(estudiante)
   return estudiante;
 };
 
@@ -37,7 +37,6 @@ const buscarTodos = async ()=>{
     "END) AS nacionalidad " +
     "FROM estudiante " +
     "WHERE activo = 1";
-
 
     const [estudiantes] = await conexion.query (consulta);
 
@@ -67,15 +66,16 @@ const crear = async (estudiante) =>{
 ////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
 const actualizar = async (idEstudiante, nuevosDatos) =>{
   const consulta = 'UPDATE estudiante SET dni=?,nombre=?,apellido=?,fechaNacimiento=?,nacionalidad=?,correoElectronico=?,celular=?,foto=? WHERE idEstudiante=?';
-
+  
+  const {dni,nombre,apellido,fechaNacimiento, nacionalidad,correoElectronico,celular,foto }=nuevosDatos;
   try {
-    const [resultado] = await conexion.query(consulta, [nuevosDatos.dni, nuevosDatos.nombre, nuevosDatos.apellido, nuevosDatos.fechaNacimiento, nuevosDatos.nacionalidad, nuevosDatos.correoElectronico, nuevosDatos.celular,  nuevosDatos.foto, idEstudiante]);
-    return resultado;
+    const [resultado] = await conexion.query(consulta, [dni, nombre, apellido, fechaNacimiento, nacionalidad, correoElectronico, celular, foto, idEstudiante]);
+
+    return buscarPorID(idEstudiante);
   } catch (error) {
     throw error;
   }
 };
-
 
 module.exports = {
     buscarPorID,

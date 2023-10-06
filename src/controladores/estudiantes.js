@@ -6,7 +6,7 @@ buscarPorId = async (req, res) => {
         const idEstudiante = req.params.idEstudiante;
 
         if (!idEstudiante) {
-            res.status(404).json({ estado: 'FALLO', msj: 'Falta el id' })
+            res.status(404).json({ estado: "FALLO", msj: "No se especificó el id del estudiante" })
         }
 
         const estudiante = await estudianteBD.buscarPorID(idEstudiante);
@@ -24,7 +24,7 @@ buscarTodos = async (req, res) => {
     try {
         const estudiante = await estudianteBD.buscarTodos();
 
-        res.json({ estado: 'OK', dato: estudiante });
+        res.json({ estado: "OK", dato: estudiante });
     } catch (exec) {
         throw exec;
 
@@ -39,12 +39,12 @@ eliminar = async (req, res) => {
 
 
     if (!idEstudiante) {
-        res.status(404).json({ estado: 'FALLO', msj: 'no se especifico el id del estudiante' });
+        res.status(404).json({ estado: "FALLO", msj: "No se especificó el id del estudiante"});
 
     } else {
         try {
             await estudianteBD.eliminar(idEstudiante);
-            res.status(200).json({ estado: 'OK', msj: 'Estudiante eliminado' });
+            res.status(200).json({ estado: "OK", msj: "Estudiante eliminado" });
         } catch (error) {
             console.log(error);
         }
@@ -73,47 +73,41 @@ crear = async (req, res) => {
 
         try {
             const estudianteNuevo = await estudianteBD.crear(estudiante);
-            res.status(201).json({ estado: 'OK', msj: 'Estudiante creado', dato: estudianteNuevo });
+            res.status(201).json({ estado: "OK", msj: "Estudiante creado", dato: estudianteNuevo });
         } catch (ex) {
             console.log(ex);
         }
     }
-
 }
 
 
 ////////////////////////////ACTUALIZAR ESTUDIANTE////////////////////////////
 actualizar = async (req, res) => {
-    const idEstudiante = req.params;
-    const nuevosDatos = req.body;
-    const camposAActualizar = req.query.campos || []; // Obtener los campos a actualizar de la consulta URL
+    
+    const {idEstudiante,dni,nombre,apellido,fechaNacimiento, nacionalidad,correoElectronico,celular,foto } = req.body;
 
-    if (!idEstudiante || camposAActualizar.length === 0) {
-        res.status(400).json({ estado: 'FALLO', msj: 'Falta seleccionar ID del estudiante o proporcionar campos a actualizar' });
+    if (!idEstudiante || !dni || !nombre || !apellido || !nacionalidad || !correoElectronico) {
+        res.status(400).json({ estado: "FALLO", msj: "Falta completar datos obligatorios del estudiante" });
     } else {
         // Filtrar los datos a actualizar según los campos proporcionados en camposAActualizar
-        const datosActualizados = {};
-        camposAActualizar.forEach((campo) => {
-            if (nuevosDatos[campo] !== undefined) {
-                datosActualizados[campo] = nuevosDatos[campo];
-            }
-        });
-
-        if (Object.keys(datosActualizados).length === 0) {
-            res.status(400).json({ estado: 'FALLO', msj: 'Ningún campo válido proporcionado para actualizar' });
-            return;
-        }
+        const datosActualizados = {
+            dni:dni,
+            nombre:nombre,
+            apellido:apellido,
+            fechaNacimiento: fechaNacimiento,
+            nacionalidad: nacionalidad,
+            correoElectronico: correoElectronico,
+            celular: celular,
+            foto: foto
+        };
 
         try {
             const resultado = await estudianteBD.actualizar(idEstudiante, datosActualizados);
-            if (resultado.affectedRows === 1) {
-                res.status(200).json({ estado: 'OK', msj: 'Estudiante modificado con éxito', datosActualizados });
-            } else {
-                res.status(404).json({ estado: 'FALLO', msj: 'El estudiante no existe' });
-            }
+            
+            res.status(200).json({ estado: "OK", msj: "Estudiante actualizado", dato: resultado})
         } catch (ex) {
             console.error(ex);
-            res.status(500).json({ estado: 'FALLO', msj: 'Error en el sistema' });
+            res.status(500).json({ estado: "FALLO", msj: "Error en el sistema" });
         }
     }
 };

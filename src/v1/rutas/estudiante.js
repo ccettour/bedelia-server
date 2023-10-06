@@ -5,19 +5,19 @@ const { buscarPorId, buscarTodos, eliminar, crear, actualizar } = require("../..
 
 const router = Router();
 
-//crear  ANDA
+//crear
 router.post("/estudiantes", crear);
 
-//eliminar   ANDA
+//eliminar
 router.delete("/estudiantes/:idEstudiante", eliminar);
 
 //actualizar
-router.put("/estudiantes/:idEstudiante", actualizar);
+router.put("/estudiantes", actualizar);
 
-//buscar   ANDA
+//buscar
 router.get("/estudiantes", buscarTodos);
 
-//buscarPorID  ANDA
+//buscarPorID
 router.get("/estudiantes/:idEstudiante", buscarPorId);
 
 module.exports = router;
