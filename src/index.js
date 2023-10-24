@@ -37,10 +37,12 @@ app.get('/', (req,res)=>{
 //Definición de las rutas del api
 const v1Publico = require('./v1/rutas/publico');
 const v1Estudiante = require('./v1/rutas/estudiante');
+const v1Carrera = require('./v1/rutas/carrera');
 
 //Middleware del api
 app.use('/api/v1/publico', v1Publico);
 app.use('/api/v1/estudiante', v1Estudiante);
+app.use('/api/v1/carrera', v1Carrera);
 
 app.listen(process.env.PUERTO, ()=>{
     console.log('API de Bedelía iniciada en el puerto ' + process.env.PUERTO);
