@@ -38,12 +38,20 @@ app.get('/', (req,res)=>{
 });
 
 //Definición de las rutas del api
+//Rutas públicas
 const v1Publico = require('./v1/rutas/publico');
+const v1Auth = require("./v1/rutas/auth");
+
+//Rutas para Bedel
 const v1Estudiante = require('./v1/rutas/estudiante');
 const v1Carrera = require('./v1/rutas/carrera');
 
+//Ruta para Decano
+
+
 //Middleware del api
 app.use('/api/v1/publico', v1Publico);
+app.use("/api/v1/auth", v1Auth);
 app.use('/api/v1/estudiante', v1Estudiante);
 app.use('/api/v1/carrera', v1Carrera);
 
