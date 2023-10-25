@@ -1,22 +1,21 @@
 const { Router } = require("express");
-const { buscarPorId } = require("../../controladores/estudiantes");
+const { buscarPorId, buscarTodos, eliminar, crear, actualizar } = require("../../controladores/estudiantes");
 
 
 
 const router = Router();
-/*
+
 //crear
-router.post("/estudiantes");
+router.post("/estudiantes", crear);
 
 //eliminar
-router.delete("/estudiantes/:idEstudiante");
+router.delete("/estudiantes/:idEstudiante", eliminar);
 
 //actualizar
-router.put("/estudiantes/:idEstudiante");
+router.put("/estudiantes", actualizar);
 
 //buscar
-router.get("/estudiantes");
-*/
+router.get("/estudiantes", buscarTodos);
 
 //buscarPorID
 router.get("/estudiantes/:idEstudiante", buscarPorId);
