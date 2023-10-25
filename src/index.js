@@ -17,7 +17,10 @@ const mysql = require('mysql2');
 
 require('dotenv').config(); //para leer las variables de entorno que están en .env
 
+const passport = require("passport");
+require("./config/passport");
 const app = express();
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
