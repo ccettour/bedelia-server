@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const handlebars = require('handlebars');
 
 exports.enviarCorreo = async (req,res) => {
+
     const {nombre,email,mensaje} = req.body;
 
     const plantillaHbs = fs.readFileSync(path.join(__dirname, '../utiles/handlebars/plantilla.hbs'), 'utf8');
