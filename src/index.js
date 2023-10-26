@@ -38,24 +38,30 @@ app.get('/', (req,res)=>{
 });
 
 const {esBedel} = require("./middlewares/esBedel");
+const {esDecano} = require("./middlewares/esDecano");
 
 //Definición de las rutas del api
-//Rutas públicas
 const v1Publico = require('./v1/rutas/publico');
 const v1Auth = require("./v1/rutas/auth");
 
-//Rutas para Bedel
 const v1Estudiante = require('./v1/rutas/estudiante');
 //const v1Carrera = require('./v1/rutas/carrera');
 
-//Ruta para Decano
+//const v1Estadistica = require('./v1/rutas/estadistica');
 
 
 //Middleware del api
+
+//Rutas públicas
 app.use('/api/v1/publico', v1Publico);
 app.use("/api/v1/auth", v1Auth);
+
+//Rutas para Bedel
 app.use('/api/v1/estudiante', [passport.authenticate("jwt", {session: false}), esBedel], v1Estudiante); //Para probar en RESTer, autenticamos, copiamos el token y cuando vamos a consultar en HEADERS ponemos Authorization y el Value es Bearer y el token
 //app.use('/api/v1/carrera', v1Carrera);
+
+//Ruta para Decano
+//app.use('/api/v1/estadistica', [passport.authenticate("jwt", {session: false}), esDecano], v1Estadistica); 
 
 app.listen(process.env.PUERTO, ()=>{
     console.log('API de Bedelía iniciada en el puerto ' + process.env.PUERTO);
