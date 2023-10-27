@@ -1,39 +1,39 @@
 const carreraBD = require("../baseDeDatos/carreraBD");
 
-////////////////////////////BUSCAR POR ID////////////////////////////
-buscarPorIdCarrera = async (req, res) => {
+////////////////////////////BUSCAR CARRERA POR ID////////////////////////////
+buscarPorId = async (req, res) => {
     try {
-        const idcarrera = req.params.idcarrera;
+        const idCarrera = req.params.idCarrera;
 
-        if (!idcarrera) {
-            res.status(404).json({ estado: "FALLO", msj: "No se especificó id de la carrera" })
+        if (!idCarrera) {
+            res.status(404).json({ estado: "FALLO", msj: "No se especificó el id de la carrera" })
         }
 
-        const carrera = await carreraBD.buscarPorIdCarrera(idcarrera);
+        const carrera = await carreraBD.buscarPorID(idCarrera);
 
         res.json({ estado: "OK", msj: carrera });
 
     } catch (exec) {
         throw exec;
     }
-
 }
-  ////////////////////////////BUSCAR TODAS LAS CARRERAS////////////////////////////
+
+
+////////////////////////////BUSCAR TODAS LAS CARRERAS////////////////////////////
 buscarCarreras = async (req, res) => {
     try {
         const carrera = await carreraBD.buscarCarreras();
 
         res.json({ estado: "OK", dato: carrera });
     } catch (exec) {
+        console.log("Acá ta fallando")
         throw exec;
-
     }
-
 }
 
 
 ////////////////////////////ELIMINAR CARRERA////////////////////////////
-eliminarCarrera = async (req, res) => {
+eliminar = async (req, res) => {
     const idCarrera = req.params.idCarrera;
 
 
@@ -51,23 +51,21 @@ eliminarCarrera = async (req, res) => {
 }
 
 
-
-
 ////////////////////////////CREAR CARRERA////////////////////////////
-crearCarrera = async (req, res) => {
-    const { nombre,modalidad } = req.body;
+crear = async (req, res) => {
+    const { nombre, modalidad } = req.body;
 
-    if (!nombre|| !modalidad) {
-        res.status(404).json({ estado: "FALLO", msj: "Faltan datos obligatorios" });
+    if (!nombre || !modalidad) {
+        res.status(404).json({ estado: "FALLO", msj: "Falta completar datos obligatorios de la carrera" });
 
     } else {
         const carrera = {
-            nombre:nombre,
+            nombre: nombre,
             modalidad: modalidad
         };
 
         try {
-            const carreraNueva = await carreraBD.crearCarrera(carrera);
+            const carreraNueva = await carreraBD.crear(carrera);
             res.status(201).json({ estado: "OK", msj: "Carrera creada", dato: carreraNueva });
         } catch (ex) {
             console.log(ex);
@@ -76,23 +74,22 @@ crearCarrera = async (req, res) => {
 }
 
 
-
 ////////////////////////////ACTUALIZAR CARRERA////////////////////////////
-actualizarCarrera= async (req, res) => {
+actualizar = async (req, res) => {
     
-    const {idCarrera,nombre,modalidad,} = req.body;
+    const {idCarrera,nombre,modalidad } = req.body;
 
-    if (!idCarrera || !nombre || modalidad) {
-        res.status(400).json({ estado: "FALLO", msj: "Falta completar datos para actualizar la carrera" });
+    if (!idCarrera || !nombre || !modalidad) {
+        res.status(400).json({ estado: "FALLO", msj: "Falta completar datos obligatorios de la carrera" });
     } else {
         // Filtrar los datos a actualizar según los campos proporcionados en camposAActualizar
         const datosActualizados = {
             nombre:nombre,
-            modalidad:modalidad,
+            modalidad: modalidad
         };
 
         try {
-            const resultado = await carreraBD.actualizarCarrera(idCarrera, datosActualizados);
+            const resultado = await carreraBD.actualizar(idCarrera, datosActualizados);
             
             res.status(200).json({ estado: "OK", msj: "Carrera actualizada", dato: resultado})
         } catch (ex) {
@@ -102,20 +99,10 @@ actualizarCarrera= async (req, res) => {
     }
 };
 
-
-
-
-
-
-
-
-
-
-
-module.exports ={
-    buscarPorIdCarrera,
+module.exports = {
+    buscarPorId,
     buscarCarreras,
-    eliminarCarrera,
-    crearCarrera,
-    actualizarCarrera
+    eliminar,
+    crear,
+    actualizar
 }
