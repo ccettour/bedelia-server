@@ -98,10 +98,6 @@ actualizar = async (req, res) => {
     }
 };
 
-
-
-
-
 module.exports = {
     buscarPorId,
     buscarTodos,
