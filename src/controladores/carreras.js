@@ -20,12 +20,13 @@ buscarPorId = async (req, res) => {
 
 
 ////////////////////////////BUSCAR TODAS LAS CARRERAS////////////////////////////
-buscarTodas = async (req, res) => {
+buscarCarreras = async (req, res) => {
     try {
-        const carrera = await carreraBD.buscarTodas();
+        const carrera = await carreraBD.buscarCarreras();
 
         res.json({ estado: "OK", dato: carrera });
     } catch (exec) {
+        console.log("Acá ta fallando")
         throw exec;
     }
 }
@@ -100,7 +101,7 @@ actualizar = async (req, res) => {
 
 module.exports = {
     buscarPorId,
-    buscarTodos,
+    buscarCarreras,
     eliminar,
     crear,
     actualizar

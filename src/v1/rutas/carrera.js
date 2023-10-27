@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { buscarPorId, buscarTodas, eliminar, crear, actualizar } = require("../../controladores/carreras");
+const { buscarPorId, buscarCarreras, eliminar, crear, actualizar } = require("../../controladores/carreras");
 
 
 
@@ -15,7 +15,7 @@ router.delete("/carreras/:idCarrera", eliminar);
 router.put("/carreras", actualizar);
 
 //buscar todas
-//router.get("/carreras", buscarTodas);
+router.get("/carreras", buscarCarreras);
 
 //buscar una por ID
 router.get("/carreras/:idCarrera", buscarPorId);

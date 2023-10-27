@@ -12,6 +12,7 @@ const login = async (req, res) => {
         req.login(usuario, { session: false }, (error) => {
             if (error) {
                 res.send(error);
+                return res.status(400).json({estado:"FALLO", msj:info});
             }
             
             const token = jwt.sign(usuario, process.env.JWT_SECRET);
