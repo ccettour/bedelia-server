@@ -2,9 +2,9 @@ const conexion = require("./conexionBD");
 
 ////////////////////////////BUSCAR POR ID////////////////////////////
 const buscarPorIdCarrera = async (idCarrera) => {
-    const consulta = "SELECT nombre, modalidad," +
-     "FROM carrera" +
-    "WHERE activo = 1 AND idCarrera =?";
+    const consulta = " SELECT nombre, modalidad " +
+    " FROM carrera " +
+    " WHERE activo = 1 AND idCarrera =? ";
   
     const [carrera] = await conexion.query(consulta, idCarrera);
     console.log(carrera)
@@ -15,9 +15,9 @@ const buscarPorIdCarrera = async (idCarrera) => {
 
   ////////////////////////////BUSCAR TODAS LAS CARRERAS////////////////////////////
   const buscarCarreras = async () => {
-    const consulta = "SELECT nombre, modalidad," +
-     "FROM carrera" +
-    "WHERE activo = 1 AND idCarrera =?";
+    const consulta = " SELECT nombre, modalidad " +
+    " FROM carrera " +
+    " WHERE activo = 1 ";
   
     const [carreras] = await conexion.query(consulta);
     console.log(carreras)

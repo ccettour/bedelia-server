@@ -36,7 +36,7 @@ const buscarTodos = async ()=>{
     "  ELSE '' " +
     "END) AS nacionalidad " +
     "FROM estudiante " +
-    "WHERE activo = 1 AND idEstudiante";
+    "WHERE activo = 1 ";
 
     const [estudiantes] = await conexion.query (consulta);
 

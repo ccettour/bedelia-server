@@ -7,7 +7,7 @@ const { buscarPorIdCarrera,buscarCarreras,eliminarCarrera,crearCarrera,actualiza
 const router = Router();
 
 //crear
-router.post("/carrerras", crearCarrera);
+router.post("/carreras", crearCarrera);
 
 //eliminar
 router.delete("/carreras/:idcarrera", eliminarCarrera);
