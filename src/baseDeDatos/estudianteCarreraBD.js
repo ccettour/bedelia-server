@@ -1,7 +1,7 @@
 const conexion = require('./conexionBD');
 
 const inscriptosCarreraPorIdCarrera = async (idCarrera) => {
-    const consulta = "SELECT e.idEstudiante, e.dni, e.nombre, e.apellido " +
+    const consulta = "SELECT e.idEstudiante, e.dni, e.nombre, e.apellido, e.correoElectronico " +
     "FROM estudiante AS e " +
     "INNER JOIN estudiantecarrera AS ec ON ec.estudiante = e.idEstudiante " +
     "INNER JOIN carrera AS c ON c.idCarrera = ec.carrera " +
