@@ -58,7 +58,7 @@ app.use("/api/v1/auth", v1Auth);
 
 //Rutas para Bedel
 app.use('/api/v1/estudiante', [passport.authenticate("jwt", {session: false}), esBedel], v1Estudiante); //Para probar en RESTer, autenticamos, copiamos el token y cuando vamos a consultar en HEADERS ponemos Authorization y el Value es Bearer y el token
-app.use('/api/v1/carrera', [passport.authenticate("jwt", {session: false}), esBedel], v1Carrera);
+app.use('/api/v1/carrera', /*[passport.authenticate("jwt", {session: false}), esBedel],*/ v1Carrera);
 
 
 //Ruta para Decano
