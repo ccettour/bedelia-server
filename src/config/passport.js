@@ -16,7 +16,7 @@ passport.use(new LocalStrategy({
         try {
             const usuario = await usuarioBD.buscar(correo, clave);
             if (!usuario) {
-                return cb(null, flase, { message: "El correo y/o la contraseña ingresados son inválidos" })
+                return cb(null, false, { message: "El correo y/o la contraseña ingresados son inválidos" })
             } else {
                 return cb(null, usuario, { message: "Bienvenido/a" })
             }
