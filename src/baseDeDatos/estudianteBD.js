@@ -25,7 +25,7 @@ const buscarPorID = async (idEstudiante) => {
 
 ////////////////////////////BUSCAR TODOS////////////////////////////
 const buscarTodos = async ()=>{
-    const consulta = "SELECT dni, nombre, apellido, fechaNacimiento,correoElectronico,celular,foto, " +
+    const consulta = "SELECT idEstudiante, dni, nombre, apellido, fechaNacimiento,correoElectronico,celular,foto, " +
     "(CASE " +
     "  WHEN nacionalidad = 0 THEN 'argentino' " +
     "  WHEN nacionalidad = 1 THEN 'uruguayo' " +

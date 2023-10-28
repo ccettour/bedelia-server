@@ -1,4 +1,4 @@
-const estudianteCarreraBD = require('../baseDatos/estudianteCarreraBD');
+const estudianteCarreraBD = require('../baseDeDatos/estudianteCarreraBD');
 
 
 nueva = async (req, res) => {
@@ -11,19 +11,19 @@ nueva = async (req, res) => {
     }
 }
 
-EstudiantesCarreraPorIdCarrera = async (req, res) => {
+inscriptosPorCarrera = async (req, res) => {
     const {idCarrera} = req.params;
 
     try{
-        const inscriptos = await estudianteCarreraBD.EstudiantesCarreraPorIdCarrera(idCarrera);
+        const inscriptos = await estudianteCarreraBD.inscriptosCarreraPorIdCarrera(idCarrera);
         res.status(201).json({estado:'OK', dato:inscriptos});
     }catch (exec){
         throw exec;
     }
-}
+};
 
 module.exports = {
     nueva,
-    EstudiantesCarreraPorIdCarrera,
+    inscriptosPorCarrera,
 }
 
