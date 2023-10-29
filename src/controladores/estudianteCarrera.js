@@ -2,13 +2,19 @@ const estudianteCarreraBD = require('../baseDeDatos/estudianteCarreraBD');
 
 
 nueva = async (req, res) => {
-    const {idCarrera, idEstudiante} = req.body;
-    try{
-        const inscripcion = await estudianteCarreraBD.nueva(idCarrera,idEstudiante);
-        res.status(201).json({estado:'OK', msj:'Estudiante inscripto'});
-    }catch (exec){
-        throw exec;
-    }
+    /* const { idCarrera, idEstudiante } = req.body;
+
+    if (!idCarrera || !idEstudiante) {
+        res.status(404).json({ estado: "FALLO", msj: "Debe indicar el estudiante y la carrera" });
+
+    } else {
+        try {
+            const inscripcionEnCarrera = await estudianteCarreraBD.altaInscripcion(idEstudiante, idCarrera);
+            res.status(201).json({ estado: "OK", msj: "Carrera creada", dato: inscripcionEnCarrera });
+        } catch (ex) {
+            console.log(ex);
+        }
+    } */
 }
 
 inscriptosPorCarrera = async (req, res) => {

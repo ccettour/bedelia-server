@@ -1,6 +1,5 @@
 const { Router } = require("express");
 const { buscarPorId, buscarCarreras, eliminar, crear, actualizar } = require("../../controladores/carreras");
-const { nueva, inscriptosPorCarrera} = require("../../controladores/estudianteCarrera");
 
 const router = Router();
 
@@ -18,8 +17,5 @@ router.get("/carreras", buscarCarreras);
 
 //buscar una por ID
 router.get("/carreras/:idCarrera", buscarPorId);
-
-//ver inscriptos
-router.get("/inscriptos/:idCarrera", inscriptosPorCarrera);
 
 module.exports = router;
