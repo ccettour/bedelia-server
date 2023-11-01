@@ -28,7 +28,7 @@ const esBedel = async (req, res, next) => {
             return res.status(403).send({ status: "Fallo", data: { error: "No tiene los privilegios necesarios." } });
         }
 
-        next();
+        next(); //Si el tipo de usuario es 1, lo dejo pasar
     });
 };
 
