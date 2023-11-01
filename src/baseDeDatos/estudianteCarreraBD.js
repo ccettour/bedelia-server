@@ -13,16 +13,48 @@ const inscriptosCarreraPorIdCarrera = async (idCarrera) => {
   return inscriptos;
 };
 
-const altaInscripcion = async (idEstudiante, idCarrera) => {
-  /* const consulta =
-    "INSERT INTO estudiantecarrera(estudiante, carrera, fechaAlta) VALUES (?,?,NOW())";
-  const [inscripcionCarrera] = await conexion.query(consulta, idEstudiante, idCarrera);
+const carrerasInscripto = async (idEstudiante) => {
+  const consulta = 
+    "SELECT c.idCarrera, c.nombre FROM estudiantecarrera AS ec " +
+    "JOIN carrera AS c ON c.idCarrera = ec.carrera " +
+    "WHERE ec.estudiante = ? AND fechaBaja IS NULL";
 
-  return inscripcionCarrera; */
+  const [carreras] = await conexion.query(consulta, idEstudiante);
+
+  return carreras;
 };
 
-const bajaInscripcion = async (idInscripcion) => {};
+const carrerasNoInscripto = async (idEstudiante) => {
+  const consulta =
+    "SELECT idCarrera, nombre FROM carrera AS c "+
+    "WHERE c.activo = 1 AND c.idCarrera NOT IN "+
+    "(SELECT carrera FROM estudiantecarrera where estudiante = ?);";
+
+  const [carreras] = await conexion.query(consulta, idEstudiante);
+
+  return carreras;
+};
+
+const altaInscripcion = async (idEstudiante, idCarrera) => {
+  const consulta =
+    "INSERT INTO estudiantecarrera(estudiante, carrera, fechaAlta) VALUES (?,?,NOW())";
+  const [inscripcionCarrera] = await conexion.query(consulta, [idEstudiante, idCarrera]);
+
+  return inscripcionCarrera;
+};
+
+const bajaInscripcion = async (idEstudiante, idCarrera) => {
+  const consulta =
+    "UPDATE estudiantecarrera SET fechaBaja=NOW() WHERE estudiante=? AND carrera=?;";
+  const [inscripcionCarrera] = await conexion.query(consulta, [idEstudiante, idCarrera]);
+
+  return inscripcionCarrera;
+};
 
 module.exports = {
   inscriptosCarreraPorIdCarrera,
+  carrerasNoInscripto,
+  carrerasInscripto,
+  altaInscripcion,
+  bajaInscripcion
 };

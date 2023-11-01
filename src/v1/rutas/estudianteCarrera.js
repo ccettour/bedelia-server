@@ -1,13 +1,22 @@
 const Router = require("express");
 
-const {nueva, inscriptosPorCarrera} = require("../../controladores/estudianteCarrera");
+const { nueva, anularInscripcion, inscriptosPorCarrera, carrerasInscriptoEst, carrerasNoInscriptoEst } = require("../../controladores/estudianteCarrera");
 
 const router = Router();
 
-router
-    //Inscribir
-  .post("/nueva", nueva)
-    //Ver inscriptos
-  .get("/estudianteCarrera/:idCarrera", inscriptosPorCarrera);
+//Inscribir
+router.post("/inscripcionCarrera", nueva);
+
+//Desinscribir
+router.put("/inscripcionCarrera", anularInscripcion);
+
+//Ver alumnos inscriptos a carrera
+router.get("/estudianteCarrera/:idCarrera", inscriptosPorCarrera);
+
+//Ver carreras en las que está inscripto
+router.get("/carrerasInscripto/:idEstudiante", carrerasInscriptoEst);
+
+//Ver carreras en las que NO está inscripto
+router.get("/carrerasNoInscripto/:idEstudiante", carrerasNoInscriptoEst);
 
 module.exports = router;

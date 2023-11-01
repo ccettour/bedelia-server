@@ -16,6 +16,7 @@ const login = async (req, res) => {
             }
             
             const token = jwt.sign(usuario, process.env.JWT_SECRET);
+            //console.log(token)
             return res.json({ usuario, token });
         });
     })(req, res);
