@@ -37,6 +37,12 @@ app.get('/', (req,res)=>{
     res.status(200).json(saludo);
 });
 
+// Ruta pública para acceder a las fotos
+app.get('/archivos/:nombreArchivo', (req, res) => {
+    const nombreArchivo = req.params.nombreArchivo;
+    res.sendFile(path.join(__dirname, 'archivos', nombreArchivo));
+});
+
 const {esBedel} = require("./middlewares/esBedel");
 const {esDecano} = require("./middlewares/esDecano");
 
@@ -47,6 +53,7 @@ const v1Auth = require("./v1/rutas/auth");
 const v1Estudiante = require('./v1/rutas/estudiante');
 const v1Carrera = require('./v1/rutas/carrera');
 const v1EstudianteCarrera = require('./v1/rutas/estudianteCarrera');
+const v1EstudianteMateria = require('./v1/rutas/estudianteMateria');
 
 //const v1Estadistica = require('./v1/rutas/estadistica');
 
@@ -58,10 +65,10 @@ app.use('/api/v1/publico', v1Publico);
 app.use("/api/v1/auth", v1Auth);
 
 //Rutas para Bedel
-app.use('/api/v1/estudiante', /*[passport.authenticate("jwt", {session: false}), esBedel],*/ v1Estudiante); //Para probar en RESTer, autenticamos, copiamos el token y cuando vamos a consultar en HEADERS ponemos Authorization y el Value es Bearer y el token
-app.use('/api/v1/carrera', /*[passport.authenticate("jwt", {session: false}), esBedel],*/ v1Carrera);
-app.use('/api/v1/estudianteCarrera', /*[passport.authenticate("jwt", {session: false}), esBedel],*/ v1EstudianteCarrera);
-
+app.use('/api/v1/estudiante', [passport.authenticate("jwt", {session: false}), esBedel], v1Estudiante); //Para probar en RESTer, autenticamos, copiamos el token y cuando vamos a consultar en HEADERS ponemos Authorization y el Value es Bearer y el token
+app.use('/api/v1/carrera', [passport.authenticate("jwt", {session: false}), esBedel], v1Carrera);
+app.use('/api/v1/estudianteCarrera', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteCarrera);
+app.use('/api/v1/estudianteMateria', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteMateria);
 
 //Ruta para Decano
 //app.use('/api/v1/estadistica', [passport.authenticate("jwt", {session: false}), esDecano], v1Estadistica); 

@@ -18,7 +18,7 @@ const buscarPorID = async (idEstudiante) => {
     "WHERE activo = 1 AND idEstudiante = ?";
 
   const [estudiante] = await conexion.query(consulta, idEstudiante);
-  console.log(estudiante)
+  //console.log(estudiante)
   return estudiante;
 };
 
@@ -59,7 +59,8 @@ const crear = async (estudiante) =>{
   const consulta = 'INSERT INTO estudiante SET ?';
   const [estudianteNuevo] = await conexion.query(consulta,estudiante);
 
-  return estudianteNuevo;
+  //return estudianteNuevo;
+  return buscarPorID(estudianteNuevo.insertId);
 }
 
 

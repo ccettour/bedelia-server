@@ -12,9 +12,9 @@ passport.use(new LocalStrategy({
     usernameField: "correoElectronico",
     passwordField: "clave"
 },
-    async (correo, clave, cb) => {
+    async (correoElectronico, clave, cb) => {
         try {
-            const usuario = await usuarioBD.buscar(correo, clave);
+            const usuario = await usuarioBD.buscar(correoElectronico, clave);
             if (!usuario) {
                 return cb(null, false, { message: "El correo y/o la contraseña ingresados son inválidos" })
             } else {
