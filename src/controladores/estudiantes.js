@@ -54,7 +54,14 @@ eliminar = async (req, res) => {
 
 ////////////////////////////CREAR ESTUDIANTE////////////////////////////
 crear = async (req, res) => {
-    const { dni, nombre, apellido, fechaNacimiento, nacionalidad, correoElectronico, celular, foto } = req.body;
+    const { dni, nombre, apellido, fechaNacimiento, nacionalidad, correoElectronico, celular} = req.body;
+
+    let filename;
+    if(!req.file){
+        filename = 'default.png'; 
+    }else{
+        filename = req.file.filename; 
+    }
 
     if (!dni || !nombre || !apellido || !nacionalidad || !correoElectronico) {
         res.status(404).json({ estado: "FALLO", msj: "Faltan datos obligatorios" });
@@ -68,7 +75,7 @@ crear = async (req, res) => {
             nacionalidad: nacionalidad,
             correoElectronico: correoElectronico,
             celular: celular,
-            foto: foto
+            foto: filename
         };
 
         try {
