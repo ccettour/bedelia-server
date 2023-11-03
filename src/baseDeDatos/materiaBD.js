@@ -32,8 +32,8 @@ const buscarPorNombre = async (nombre) => {
     "FROM materia " +
     "WHERE activo = 1 AND nombre LIKE ?";
 
-    const [materia] = await conexion.query(consulta, nom);
-    console.log(materia);
+  const [materia] = await conexion.query(consulta, nom);
+  //console.log(materia);
 
   return materia;
 };
@@ -62,27 +62,65 @@ const eliminar = async (idMateria) => {
 };
 
 ////////////////////////////CREAR MATERIA////////////////////////////
-const crear = async (materia) => {
+const crear = async (materia, idCarrera) => {
   const consulta = "INSERT INTO materia SET ?";
   const [materiaNueva] = await conexion.query(consulta, materia);
+
+  if (idCarrera > 0) {
+    const cons =
+      "INSERT INTO carreramateria(idCarrera, idMateria) VALUES (?,?)";
+    const [asignacion] = await conexion.query(cons, [
+      idCarrera,
+      materiaNueva.insertId,
+    ]);
+  }
 
   //return materiaNueva;
   return buscarPorId(materiaNueva.insertId);
 };
 
-// const actualizar = async (idMateria, nuevosDatos) => {
-//     const consulta = "UPDATE carrera SET nombre=?,modalidad=? WHERE idCarrera=?";
+const actualizar = async (idMateria, nuevosDatos, idCarrera) => {
 
-//     const { nombre, horasSemanales, carrera } = nuevosDatos;
-//     try {
-//       const [resultado] = await conexion.query(consulta, [nombre, horasSemanales, carrera, idMateria]);
+  //Agregar todo el tema de transacción
+  const consulta =
+    "UPDATE materia SET horasSemanales=?,nombre=?,tipoMateria=? WHERE idMateria=?";
+  const { horasSemanales, nombre, tipoMateria } = nuevosDatos;
+  try {
+    const [resultado] = await conexion.query(consulta, [
+      horasSemanales,
+      nombre,
+      tipoMateria,
+      idMateria,
+    ]);
 
-//       return buscarPorID(idMateria);
+    const [existe] = await conexion.query(
+      "SELECT 1 FROM carreramateria WHERE idCarrera = ? AND idMateria = ?",
+      [idCarrera, idMateria]
+    );
 
-//     } catch (error) {
-//       throw error;
-//     }
-//   };
+    const [desactivarTodas] = await conexion.query(
+      "UPDATE carreramateria SET activo=0 WHERE idMateria = ?",
+      [idMateria]
+    );
+
+    if (existe.length > 0) {
+      const [activarNueva] = await conexion.query(
+        "UPDATE carreramateria SET activo=1 WHERE idCarrera = ? AND idMateria = ?",
+        [idCarrera, idMateria]
+      );
+    } else {
+      if (idCarrera > 0) {
+        const [crear] = await conexion.query(
+          "INSERT INTO carreramateria(idCarrera, idMateria) VALUES (?,?)",
+          [idCarrera, idMateria]
+        );
+      }
+    }
+    return buscarPorId(idMateria);
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   buscarPorId,
@@ -90,6 +128,5 @@ module.exports = {
   buscarTodas,
   eliminar,
   crear,
-  /* buscarMateria,
-    actualizar */
+  actualizar,
 };

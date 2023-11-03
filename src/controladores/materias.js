@@ -75,53 +75,61 @@ eliminar = async (req, res) => {
   }
 };
 
- crear = async (req,res) => {
-     const {nombre, horasSemanales, tipoMateria} = req.body;
+crear = async (req, res) => {
+  const { nombre, horasSemanales, tipoMateria, idCarrera } = req.body;
 
-     if(!nombre || !horasSemanales || !tipoMateria) {
+  if (!nombre || !horasSemanales || !tipoMateria || !idCarrera) {
+    res
+      .status(404)
+      .json({
+        estado: "FALLA",
+        msj: "Faltan completar datos obligatorios",
+      });
+  } else {
+    const materia = {
+      nombre: nombre,
+      horasSemanales: horasSemanales,
+      tipoMateria: tipoMateria,
+    };
 
-         res.status(404).json({estado:'FALLA', msj:'Faltan completar datos obligatorios de la materia' });
+    try {
+      const materiaNueva = await materiaBD.crear(materia, idCarrera);
+      res
+        .status(201)
+        .json({ estado: "OK", msj: "Materia creada", data: materiaNueva });
+    } catch (ex) {
+      console.log(ex);
+    }
+  }
+};
 
-     } else {
-         const materia = {
-             nombre: nombre,
-             horasSemanales: horasSemanales,
-             tipoMateria: tipoMateria
-         };
+actualizar = async (req, res) => {
+  const { idMateria, horasSemanales, nombre, tipoMateria, idCarrera } = req.body;
 
-         try {
-             const materiaNueva = await materiaBD.crear(materia);
-             res.status(201).json({estado:'OK', msj:'Materia creada', data: materiaNueva});
-         } catch (ex) {
-             console.log(ex);
-         }
-     }
- }
+  if (!idMateria || !horasSemanales || !nombre || !tipoMateria || !idCarrera) {
+    res
+      .status(400)
+      .json({
+        estado: "FALLO",
+        msj: "Falta completar datos obligatorios",
+      });
+  } else {
+    const datosActualizados = {
+      nombre: nombre,
+      horasSemanales: horasSemanales,
+      tipoMateria: tipoMateria,
+    };
 
- // actualizar = async (req, res) => {
+    try {
+      const resultado = await materiaBD.actualizar(idMateria, datosActualizados, idCarrera);
 
-//     const {idMateria, nombre, horasSemanales, carrera} = req.body;
-
-//     if (!idMateria|| !nombre || !horasSemanales || !carrera) {
-//         res.status(400).json({ estado: "FALLO", msj: "Falta completar datos obligatorios de la materia" });
-//     } else {
-
-//         const datosActualizados = {
-//             nombre: nombre,
-//             horasSemanales: horasSemanales,
-//             carrera: carrera
-//         };
-
-//         try {
-//             const resultado = await materiaBD.actualizar(idMateria, datosActualizados);
-
-//             res.status(200).json({ estado: "OK", msj: "Materia actualizada", dato: resultado})
-//         } catch (ex) {
-//             console.error(ex);
-//             res.status(500).json({ estado: "FALLO", msj: "Error en el sistema" });
-//         }
-//     }
-// };
+      res.status(200).json({ estado: "OK", msj: "Materia actualizada", dato: resultado });
+    } catch (ex) {
+      console.error(ex);
+      res.status(500).json({ estado: "FALLO", msj: "Error en el sistema" });
+    }
+  }
+};
 
 module.exports = {
   buscarPorId,
@@ -129,5 +137,5 @@ module.exports = {
   buscarMaterias,
   eliminar,
   crear,
-  /*  actualizar */
+  actualizar,
 };

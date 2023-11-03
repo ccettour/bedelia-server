@@ -17,8 +17,8 @@ router.post("/materias", crear);
 //eliminar
 router.delete("/materias/:idMateria", eliminar);
 
-// //actualizar
-// router.put('/materia/:idMateria',actualizar);
+//actualizar
+router.put("/materias",actualizar);
 
 //buscar
 router.get("/materias", buscarMaterias);
