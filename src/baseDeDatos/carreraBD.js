@@ -4,17 +4,17 @@ const conexion = require("./conexionBD");
 ////////////////////////////BUSCAR CARRERA POR ID////////////////////////////
 const buscarPorID = async (idCarrera) => {
   const consulta =
-    "SELECT nombre, "
-  "(CASE " +
+    "SELECT nombre, " +
+    "CASE " +
     "  WHEN modalidad = 0 THEN 'presencial' " +
     "  WHEN modalidad = 1 THEN 'virtual' " +
     "  ELSE '' " +
-    "END) AS modalidad " +
+    "END AS modalidad " +
     "FROM carrera " +
     "WHERE activo = 1 AND idCarrera = ?";
 
-  const [carrera] = await conexion.query(consulta, idCarrera);
-  console.log(carrera)
+  const [carrera] = await conexion.query(consulta, [idCarrera]);
+  console.log(carrera);
   return carrera;
 };
 
