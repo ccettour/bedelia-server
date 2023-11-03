@@ -2,7 +2,7 @@ const conexion = require('./conexionBD');
 
 
 const estadistica = async (materia) => {
-    const consulta = 'call datosPdf(?)';
+    const consulta = 'call procEstadistica2()';
     
     const [results] = await conexion.query(consulta,[materia]);    
     
@@ -15,7 +15,7 @@ const estadistica = async (materia) => {
 
 
 const estadistica2 = async (carrera) => {
-    const consulta = 'call datosPdf(?)';
+    const consulta = 'call procEstadistica2()';
     
     const [results] = await conexion.query(consulta,[carrera]);    
     
@@ -30,7 +30,7 @@ const estadistica2 = async (carrera) => {
 
 
 const estadistica3 = async (estudiante) => {
-    const consulta = 'call datosPdf(?)';
+    const consulta = 'call procEstadistica2()';
     
     const [results] = await conexion.query(consulta,[estudiante]);    
     
@@ -38,7 +38,7 @@ const estadistica3 = async (estudiante) => {
 
 
     const cantidad = results[0];
-    return cantidad;
+    return ;
 }
 
 
