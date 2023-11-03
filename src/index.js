@@ -59,6 +59,7 @@ const v1EstudianteMateria = require('./v1/rutas/estudianteMateria');
 //const v1Estadistica = require('./v1/rutas/estadistica');
 
 
+
 //Middleware del api
 
 //Rutas públicas
@@ -73,7 +74,9 @@ app.use('/api/v1/estudianteCarrera', [passport.authenticate("jwt", {session: fal
 app.use('/api/v1/estudianteMateria', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteMateria);
 
 //Ruta para Decano
-//app.use('/api/v1/estadistica', [passport.authenticate("jwt", {session: false}), esDecano], v1Estadistica); 
+//app.use('/api/v1/estadistica', [passport.authenticate("jwt", {session: false}), esDecano], v1Estadistica);
+const v1Estadistica = require('./v1/rutas/estadistica');
+app.use('/api/v1/estadistica', v1Estadistica); 
 
 app.listen(process.env.PUERTO, ()=>{
     console.log('API de Bedelía iniciada en el puerto ' + process.env.PUERTO);
