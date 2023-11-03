@@ -1,19 +1,18 @@
 const conexion = require('./conexionBD');
 
-const estadistica = async () => {
-    // este procedimiento almacenado retorna 2 valores de forma separada la proxima clase lo mejoramos
-    const consulta = 'call procEstadistica()';
+
+const estadistica = async (materia) => {
+    const consulta = 'call datosPdf(?)';
     
-    const [results] = await conexion.query(consulta);    
+    const [results] = await conexion.query(consulta,[materia]);    
     
     // console.log(results);
 
-    const datos = {
-        mas30 : results[0][0].mas30,
-        cantidadInscriptos : results[0][0].cantidadInscriptos
-    }
-    return datos;
+
+    const cantidad = results[0];
+    return cantidad;
 }
+
 
 const estadistica2 = async (carrera) => {
     const consulta = 'call datosPdf(?)';
@@ -23,11 +22,30 @@ const estadistica2 = async (carrera) => {
     // console.log(results);
 
 
-    const inscriptos = results[0];
-    return inscriptos;
+    const cantidad = results[0];
+    return cantidad;
 }
+
+
+
+
+const estadistica3 = async (estudiante) => {
+    const consulta = 'call datosPdf(?)';
+    
+    const [results] = await conexion.query(consulta,[estudiante]);    
+    
+    // console.log(results);
+
+
+    const cantidad = results[0];
+    return cantidad;
+}
+
+
+
 
 module.exports = {
     estadistica,
-    estadistica2
+    estadistica2,
+    estadistica3
 }

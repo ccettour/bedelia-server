@@ -74,7 +74,7 @@ app.use('/api/v1/carrera', [passport.authenticate("jwt", {session: false}), esBe
 app.use('/api/v1/estudianteCarrera', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteCarrera);
 app.use('/api/v1/estudianteMateria', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteMateria);
 //DECANO//
-app.use('/api/v1/estadistica', [passport.authenticate('jwt', {session: false}), esDecano], v1Estadistica);
+app.use('/api/v1/estadistica', [passport.authenticate("jwt", {session: false}), esBedel], v1Estadistica);
 
 app.listen(process.env.PUERTO, ()=>{
     console.log('API de Bedelía iniciada en el puerto ' + process.env.PUERTO);
