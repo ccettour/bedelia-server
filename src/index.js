@@ -55,7 +55,8 @@ const v1Carrera = require('./v1/rutas/carrera');
 const v1EstudianteCarrera = require('./v1/rutas/estudianteCarrera');
 const v1EstudianteMateria = require('./v1/rutas/estudianteMateria');
 
-//const v1Estadistica = require('./v1/rutas/estadistica');
+//Para la api de estadisticas
+const v1Estadistica = require('./v1/rutas/estadistica');
 
 
 
@@ -70,11 +71,8 @@ app.use('/api/v1/estudiante', [passport.authenticate("jwt", {session: false}), e
 app.use('/api/v1/carrera', [passport.authenticate("jwt", {session: false}), esBedel], v1Carrera);
 app.use('/api/v1/estudianteCarrera', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteCarrera);
 app.use('/api/v1/estudianteMateria', [passport.authenticate("jwt", {session: false}), esBedel], v1EstudianteMateria);
-
-//Ruta para Decano
-//app.use('/api/v1/estadistica', [passport.authenticate("jwt", {session: false}), esDecano], v1Estadistica);
-const v1Estadistica = require('./v1/rutas/estadistica');
-app.use('/api/v1/estadistica', v1Estadistica); 
+//DECANO//
+app.use('/api/v1/estadistica', [passport.authenticate('jwt', {session: false}), esDecano], v1Estadistica);
 
 app.listen(process.env.PUERTO, ()=>{
     console.log('API de Bedelía iniciada en el puerto ' + process.env.PUERTO);
