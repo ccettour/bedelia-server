@@ -79,10 +79,21 @@ const actualizar = async (idEstudiante, nuevosDatos) =>{
   }
 };
 
+////////////////////////////BUSCAR POR NOMBRE/APELLIDO/DNI////////////////////////////
+const buscarPorCriterio = async (criterio) => {
+
+  const consulta = "SELECT * FROM estudiante WHERE activo = 1 AND (nombre = ? OR apellido = ? OR DNI = CAST(? AS SIGNED));"
+
+  const [estudiantes] = await conexion.query(consulta, [criterio,criterio,criterio]);
+
+  return estudiantes;
+};
+
 module.exports = {
     buscarPorID,
     buscarTodos,
     eliminar,
     crear,
-    actualizar
+    actualizar,
+    buscarPorCriterio
 }
