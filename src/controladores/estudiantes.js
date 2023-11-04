@@ -120,7 +120,23 @@ actualizar = async (req, res) => {
 };
 
 
+////////////////////////////BUSCAR POR CRITERIO////////////////////////////
+buscarCritero = async (req, res) => {
+    
+    const criterio = req.params.criterio;
 
+    if (!criterio) {
+        res.status(404).json({ estado: "FALLO", msj: "No se especificó el criterio de búsqueda"});
+
+    } else {
+        try {
+            const resultado = await estudianteBD.buscarPorCriterio(criterio);
+            res.status(200).json({ estado: "OK", dato: resultado });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
 
 module.exports = {
@@ -128,5 +144,6 @@ module.exports = {
     buscarTodos,
     eliminar,
     crear,
-    actualizar
+    actualizar,
+    buscarCritero
 }
