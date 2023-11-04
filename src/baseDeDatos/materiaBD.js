@@ -1,7 +1,6 @@
 const conexion = require("./conexionBD");
 
 ////////////////////////////BUSCAR POR ID////////////////////////////
-
 const buscarPorId = async (idMateria) => {
   const consulta =
     "SELECT horasSemanales, nombre, " +
@@ -14,16 +13,16 @@ const buscarPorId = async (idMateria) => {
     "WHERE activo = 1 AND idMateria = ?";
 
   const [materia] = await conexion.query(consulta, idMateria);
-  //   console.log(materia);
+  
   return materia;
 };
 
-////////////////////////////BUSCAR POR NOMBRE////////////////////////////
 
+////////////////////////////BUSCAR POR NOMBRE////////////////////////////
 const buscarPorNombre = async (nombre) => {
   const nom = "%" + nombre + "%";
   const consulta =
-    "SELECT horasSemanales, nombre, " +
+    "SELECT idMateria, horasSemanales, nombre, " +
     "(CASE " +
     "  WHEN tipoMateria = 0 THEN 'anual' " +
     "  WHEN tipoMateria = 1 THEN 'cuatrimestral' " +
@@ -33,10 +32,10 @@ const buscarPorNombre = async (nombre) => {
     "WHERE activo = 1 AND nombre LIKE ?";
 
   const [materia] = await conexion.query(consulta, nom);
-  //console.log(materia);
-
+  
   return materia;
 };
+
 
 ////////////////////////////BUSCAR TODAS////////////////////////////
 const buscarTodas = async () => {
@@ -51,15 +50,17 @@ const buscarTodas = async () => {
     "WHERE activo = 1";
 
   const [materias] = await conexion.query(consulta);
-  //   console.log(materias);
+  
   return materias;
 };
+
 
 ////////////////////////////ELIMINAR////////////////////////////
 const eliminar = async (idMateria) => {
   const consulta = "UPDATE materia SET activo = 0 WHERE idMateria = ?";
   await conexion.query(consulta, [idMateria]);
 };
+
 
 ////////////////////////////CREAR MATERIA////////////////////////////
 const crear = async (materia, idCarrera) => {
@@ -75,13 +76,11 @@ const crear = async (materia, idCarrera) => {
     ]);
   }
 
-  //return materiaNueva;
   return buscarPorId(materiaNueva.insertId);
 };
 
+////////////////////////////ACTUALIZAR////////////////////////////
 const actualizar = async (idMateria, nuevosDatos, idCarrera) => {
-
-  //Agregar todo el tema de transacción
   const consulta =
     "UPDATE materia SET horasSemanales=?,nombre=?,tipoMateria=? WHERE idMateria=?";
   const { horasSemanales, nombre, tipoMateria } = nuevosDatos;

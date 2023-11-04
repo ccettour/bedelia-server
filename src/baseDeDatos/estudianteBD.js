@@ -18,7 +18,7 @@ const buscarPorID = async (idEstudiante) => {
     "WHERE activo = 1 AND idEstudiante = ?";
 
   const [estudiante] = await conexion.query(consulta, idEstudiante);
-  //console.log(estudiante)
+  
   return estudiante;
 };
 
@@ -45,14 +45,11 @@ const buscarTodos = async ()=>{
 };
 
 
-
-
 ////////////////////////////ELIMINAR ESTUDIANTE////////////////////////////
 const eliminar = async (idEstudiante)=>{
     const consulta = 'UPDATE estudiante SET activo = 0 WHERE idEstudiante = ?';
     await conexion.query(consulta, [idEstudiante]);
 }
-
 
 
 ////////////////////////////CREAR ESTUDIANTE////////////////////////////
@@ -79,12 +76,15 @@ const actualizar = async (idEstudiante, nuevosDatos) =>{
   }
 };
 
+
 ////////////////////////////BUSCAR POR NOMBRE/APELLIDO/DNI////////////////////////////
 const buscarPorCriterio = async (criterio) => {
 
-  const consulta = "SELECT * FROM estudiante WHERE activo = 1 AND (nombre = ? OR apellido = ? OR DNI = CAST(? AS SIGNED));"
+  const crit = "%"+criterio+"%";
 
-  const [estudiantes] = await conexion.query(consulta, [criterio,criterio,criterio]);
+  const consulta = "SELECT * FROM estudiante WHERE activo = 1 AND (nombre LIKE ? OR apellido LIKE ? OR DNI = CAST(? AS SIGNED));"
+
+  const [estudiantes] = await conexion.query(consulta, [crit,crit,criterio]);
 
   return estudiantes;
 };

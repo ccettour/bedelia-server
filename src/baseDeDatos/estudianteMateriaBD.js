@@ -13,19 +13,6 @@ const inscriptosMateriaPorIdMateria = async (idMateria) => {
   return inscriptos;
 };
 
-/* const buscarInscripcion = async (idEstudiante, idMateria) => {
-  const consulta =
-    "SELECT em.idEstudianteMateria "+
-    "FROM estudiante AS e "+
-    "INNER JOIN estudiantemateria AS em ON em.estudiante = e.idEstudiante "+
-    "INNER JOIN materia AS m ON m.idMateria = em.materia "+
-    "WHERE e.idEstudiante = ? AND m.idMateria = ?";
-
-  const idInscripcion = await conexion.query(consulta, [idEstudiante, idMateria]);
-
-  return idInscripcion;
-}; */
-
 const materiasInscripto = async (idEstudiante) => {
   const consulta = 
     "SELECT m.idMateria, m.nombre FROM estudiantemateria AS em "+
@@ -45,7 +32,7 @@ const materiasNoInscripto = async (idEstudiante) => {
   "WHERE c.idCarrera IN ( "+
   "    SELECT ec.carrera "+
   "    FROM estudiantecarrera AS ec "+
-  "    WHERE ec.estudiante = ? "+
+  "    WHERE ec.estudiante = ? AND ec.fechaBaja IS NULL"+
   ") "+
   "AND m.idMateria NOT IN ( "+
   "    SELECT em.materia "+
